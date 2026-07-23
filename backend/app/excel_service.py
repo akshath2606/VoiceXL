@@ -60,7 +60,7 @@ def read_cell(sheet_name, cell_reference):
     except FileNotFoundError:
         print(f"Error: The workbook '{WORKBOOK_PATH}' was not found.")
         return None
- 
+
 
     try:
         worksheet = workbook[sheet_name]
@@ -82,36 +82,19 @@ if __name__ == "__main__":
     print(value)
 
 def write_cell(sheet_name, cell_reference, value):
-    """Write a value to a worksheet cell."""
     try:
         workbook = load_workbook(WORKBOOK_PATH)
-    except FileNotFoundError:
-        print(f"Error: The workbook '{WORKBOOK_PATH}' was not found.")
-        return None
-
-    try:
-        try:
-            worksheet = workbook[sheet_name]
-        except KeyError:
-            print(f"Error: Worksheet '{sheet_name}' does not exist in '{WORKBOOK_PATH.name}'.")
-            return None
-
-        # Assign the value to the cell
-        try:
-            worksheet[cell_reference].value = value
-        except Exception as e:
-            print(f"Error writing to cell '{cell_reference}' in '{sheet_name}': {e}")
-            return None
-
-        # Save changes and return the written value
-        try:
-            workbook.save(WORKBOOK_PATH)
-        except Exception as e:
-            print(f"Error saving workbook '{WORKBOOK_PATH}': {e}")
-            return None
-
+        worksheet = workbook[sheet_name]
+        worksheet[cell_reference].value = value
+        workbook.save(WORKBOOK_PATH)
         return value
+    except FileNotFoundError:
+        print(f"Error: '{WORKBOOK_PATH}' not found.")
+    except KeyError:
+        print(f"Error: Worksheet '{sheet_name}' not found.")
+    except Exception as e:
+        print(f"Error writing '{cell_reference}': {e}")
     finally:
-        workbook.close()
-
+        if 'workbook' in locals():
+            workbook.close()
 print(WORKBOOK_PATH)
