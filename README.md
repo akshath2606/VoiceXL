@@ -1,6 +1,4 @@
 # VoiceXL
-# VoiceXL
-
 VoiceXL is an AI-powered voice-controlled spreadsheet editor that allows users to interact with Excel files using natural language and voice commands.
 
 The goal of this project is to explore modern AI-assisted software engineering while building a production-style application from scratch.
